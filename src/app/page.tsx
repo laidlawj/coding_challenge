@@ -13,7 +13,8 @@ export default function Home() {
   const addToCart = (product: string) => {
     const alreadyInCart = items.find(item => item.name === product);
     if (alreadyInCart) {
-      // @TODO need to find out how to update cart items
+      console.log(alreadyInCart)
+      alreadyInCart.quantity = alreadyInCart.quantity + 1
     } else {
       setItems([...items, { name: product, quantity: 1 }]);
     }

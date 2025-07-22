@@ -98,9 +98,11 @@
 
   .grid {
     /* TODO Look up how to make a single column list*/
+    grid-template-columns: repeat(1, minmax(100%, auto));
     margin-bottom: 120px;
     max-width: 320px;
     text-align: center;
+    /* grid-auto-columns: 100%; */
   }
 
   .basket,
@@ -162,6 +164,8 @@
 /* Tablet and Smaller Desktop */
 @media (min-width: 701px) and (max-width: 1120px) {
   .grid {
+
+    grid-template-columns: repeat(2, minmax(50%, auto));
     /* TODO Look up how to make a 2 column list*/
   }
 }
