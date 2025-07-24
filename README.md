@@ -26,3 +26,18 @@ npm run dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 Run the testing and linting with `npm run test` and `npm run lint`.
+
+
+
+
+THINGS TO NOTE:
+
+- duplicate product ids from the two api endpoints --> are these unique or not?
+    - assuming they arent  - so created new ids, but there should be a check to make sure user doesn't see duplicate content 
+
+- cart displaying is distracting for a user, should just be a checkout icon 
+
+
+TODO: 
+- fix checkout page
+- fix look for iphone (the cart dissapears) 

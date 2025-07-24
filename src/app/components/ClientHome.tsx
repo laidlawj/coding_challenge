@@ -1,5 +1,5 @@
 'use client';
-
+import { useRouter } from 'next/navigation'; 
 import React, { useState, useEffect, Suspense } from 'react';
 import styles from '../page.module.css';
 import Link from 'next/link';
@@ -7,7 +7,6 @@ import { CartItem, useCart } from '../context/CartContext';
 import { Product } from './ProductList';
 import { AllProducts } from './ProductCards';
 
-// --- Helper Components (can be in separate files if preferred) ---
 
 // ItemCount component (for displaying item counts in basket summary)
 function ItemCount({ count, name }: { count: number; name: string }) {
@@ -73,12 +72,15 @@ function FetchAdditionalProducts() {
  * @param {ClientHomeProps} props - The component props.
  * @param {Product[]} props.products - The initial list of products.
  */
+export interface ClientHomeProps {
+  products: Product[]; // These are the initial products passed from the Server Component
+}
 
-
-export default function ClientHome({ products: initialProducts }: ClientHomeProps) {
+export default function ClientHome({ products: initialProducts}: ClientHomeProps) {
   const { items, itemCount, addToCart } = useCart();
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const { moreProducts, error: additionalProductsError } = FetchAdditionalProducts();
+
 
   // Effect to initialize allProducts with initialProducts
   useEffect(() => {

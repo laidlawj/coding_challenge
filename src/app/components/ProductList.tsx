@@ -1,19 +1,18 @@
 
 type NameByLocation = { 
-  us: string, 
-  uk: string
+  [key: string]: string;
 } 
 
 type PriceByLocation = {
-  usd: Number, 
-  gbp: Number
-}
+ [key: string]: number;
+} 
+
 
 export type Product = {
-  id: Number, 
+  id: number, 
   name: NameByLocation, 
   price: PriceByLocation,
-  stock: Number
+  stock: number
 }
 export async function getProducts(): Promise<Product[]> {
   // In a real application, you'd fetch from your API here

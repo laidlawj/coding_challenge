@@ -1,5 +1,10 @@
+import { useLocale } from '../context/LocalContext';
 import styles from '../page.module.css';
+import { getCurrencyLocaleConfig } from '../utils/CurrencyConfig';
 import { Product } from './ProductList';
+import Spinner from './Spinner';
+
+
 
 interface AllProductsProps { 
     allProducts: Product[],
@@ -10,23 +15,32 @@ interface AllProductsProps {
 // ProductCard component (for a single product display)
 interface ProductCardProps {
   product: Product;
-  addToCart: (itemName: string) => void;
+  addToCart: (itemName: string|undefined) => void;
 }
-
-interface ClientHomeProps {
-  products: Product[]; // These are the initial products passed from the Server Component
-}
-
 function ProductCard({ product, addToCart }: ProductCardProps) {
+    const { locale } = useLocale();
+    console.log("locale is", locale)
+
+    const currencyConfig = getCurrencyLocaleConfig(locale);
+    console.log('currency config is', currencyConfig)
+    const priceToDisplay = product.price[currencyConfig.priceKey]
+    
+    
+    const formattedPrice = new Intl.NumberFormat(currencyConfig.localeFormat, {
+        style: 'currency',
+        currency: currencyConfig.currencyCode,
+    }).format(priceToDisplay);  // Changed from Number to number
+
+
   return (
     <button
-      key={product.name.uk}
+      key={String(product.id)}
       className={styles.card}
-      onClick={() => addToCart(product.name.uk)}
-      aria-label={`Add ${product.name.uk} to basket`}
+      onClick={() => addToCart(product.name[locale])}
+      aria-label={`Add ${product.name[locale]}to basket`}
     >
-      <h2>{product.name.uk} <span>-&gt;</span></h2>
-      <p>£{String(product.price.gbp)}</p>
+      <h2>{product.name[locale]} <span>-&gt;</span></h2>
+      <p>{formattedPrice}</p>
     </button>
   );
 }
@@ -43,8 +57,8 @@ export function AllProducts({allProducts, moreProducts, additionalProductsError,
             {/* Conditional rendering for additional products loading/error state */}
             {moreProducts === null && (
             <div className={styles.loadingMore}>
-                <h2>Loading more amazing products...</h2>
-                {/* You can add a spinner here */}
+            
+               <Spinner/> 
             </div>
             )}
 
