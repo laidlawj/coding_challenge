@@ -1,7 +1,7 @@
 'use client';
 import React, { createContext, useContext, useState } from 'react';
 
-type CartItem = {
+export type CartItem = {
   name: string;
   quantity: number;
 };
