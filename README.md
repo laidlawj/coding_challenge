@@ -26,3 +26,17 @@ npm run dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 Run the testing and linting with `npm run test` and `npm run lint`.
+
+
+
+
+## JADE THINGS TO NOTE:
+Product ID Duplication: I've identified an issue with non-unique product IDs originating from the two API endpoints. This leads to duplicate component IDs in the rendered output. For a production environment, this must be addressed by either ensuring distinct IDs from the backend, implementing frontend logic to prevent displaying duplicates, or adding a unique prefix (e.g., for recommended items) to differentiate them.
+
+Cart Display User Experience: The original persistent display of cart contents is distracting and deviates from standard e-commerce practices. I have commented out the ui, and preserved this functionality, the preferred approach is to display only a cart button, which can be easily reverted if needed.
+
+Testing Strategy: Due to time constraints, I opted for integration testing to simulate the end-user experience. In a full production cycle, a comprehensive testing strategy would ideally incorporate both unit and integration tests.
+
+Next Steps & Immediate Focus:
+
+Inventory Management Policy: Define and implement a clear policy for handling product and stock levels. This includes preventing purchases of out-of-stock items and considering mechanisms for temporarily securing items in a user's cart (e.g., a 30-minute reservation).
