@@ -1,33 +1,46 @@
 'use client';
 import React, { createContext, useContext, useState } from 'react';
+import { Product } from '../components/ProductList';
 
-export type CartItem = {
-  name: string;
+// CartItemsMap: Key is productId (number), Value is quantity (number)
+export interface ProductInfo extends Product {
   quantity: number;
-};
+}
+
+export type CartItemsMap = Map<number, ProductInfo>
 
 type CartContextType = {
-  items: CartItem[];
+  items: CartItemsMap;
   itemCount: number;
-  addToCart: (name: string) => void;
+  addToCart: (product: Product) => void;
 };
+
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
-  const [items, setItems] = useState<CartItem[]>([]);
+  const [items, setItems] = useState<CartItemsMap>(new Map());
   const [itemCount, setItemCount] = useState<number>(0);
 
-  const addToCart = (product: string) => {
-    const existing = items.find(item => item.name === product);
-    if (existing) {
-      const updated = items.map(item =>
-        item.name === product ? { ...item, quantity: item.quantity + 1 } : item
-      );
-      setItems(updated);
+  const addToCart = (product: Product) => {
+    console.log("got here at least")
+    const updatedItems = new Map(items);
+    const productId = product.id
+    const currentQuantity = updatedItems.get(productId)?.quantity || 0;
+
+    
+    if (currentQuantity == 0) {
+      const productInfo =  {...product, // Spreads all properties from productObject
+  quantity: 1}
+      // Item exists: increment quantity
+      updatedItems.set(productId, productInfo);
     } else {
-      setItems([...items, { name: product, quantity: 1 }]);
+      // Item does not exist: add with quantity 1
+      const productInfo =  {...product, // Spreads all properties from productObject
+  quantity: currentQuantity + 1}
+      updatedItems.set(productId, productInfo);
     }
+    setItems(updatedItems)
     setItemCount(prev => prev + 1);
   };
 

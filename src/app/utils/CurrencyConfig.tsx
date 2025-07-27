@@ -1,3 +1,4 @@
+import { Product } from '../components/ProductList';
 import { ProductPrice } from '../types'; // Adjust path to your types file
 
 interface CurrencyLocaleConfig {
@@ -33,3 +34,14 @@ export const getCurrencyLocaleConfig = (locale: string): CurrencyLocaleConfig =>
     console.log("local is", locale)
   return localeCurrencyMap[locale] || defaultCurrencyLocaleConfig;
 };
+
+export function getFormattedPrice(product: Product, locale: string) {
+    const currencyConfig = getCurrencyLocaleConfig(locale);
+    const priceToDisplay = product.price[currencyConfig.priceKey]
+    
+    const formattedPrice = new Intl.NumberFormat(currencyConfig.localeFormat, {
+        style: 'currency',
+        currency: currencyConfig.currencyCode,
+    }).format(priceToDisplay);  // Changed from Number to number
+    return formattedPrice
+}

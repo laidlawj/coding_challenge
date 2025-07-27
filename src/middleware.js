@@ -12,6 +12,7 @@ const defaultLocale = 'uk';
 export function middleware(request) { // Removed NextRequest type annotation
   console.log("using middlewear now")
   const { pathname } = request.nextUrl;
+  console.log("on ", pathname)
   // This log should appear for *every* request that hits the middleware,
   // including /us, if the matcher allows it.
 

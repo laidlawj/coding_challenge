@@ -1,6 +1,7 @@
-import { useLocale } from '../context/LocalContext';
+
+import { useParams } from 'next/navigation';
 import styles from '../page.module.css';
-import { getCurrencyLocaleConfig } from '../utils/CurrencyConfig';
+import { getFormattedPrice } from '../utils/CurrencyConfig';
 import { Product } from './ProductList';
 import Spinner from './Spinner';
 
@@ -10,34 +11,26 @@ interface AllProductsProps {
     allProducts: Product[],
     moreProducts: Product[] | null,
     additionalProductsError: string | null, 
-    addToCart: (itemName: string) => void;
+    addToCart: (product: Product) => void;
 }
-// ProductCard component (for a single product display)
+
 interface ProductCardProps {
   product: Product;
-  addToCart: (itemName: string|undefined) => void;
+  addToCart: (product: Product) => void;
 }
+
 function ProductCard({ product, addToCart }: ProductCardProps) {
-    const { locale } = useLocale();
-    console.log("locale is", locale)
+    console.log("hi here")
+    const params = useParams();
+    const locale = params.locale as string;
 
-    const currencyConfig = getCurrencyLocaleConfig(locale);
-    console.log('currency config is', currencyConfig)
-    const priceToDisplay = product.price[currencyConfig.priceKey]
-    
-    
-    const formattedPrice = new Intl.NumberFormat(currencyConfig.localeFormat, {
-        style: 'currency',
-        currency: currencyConfig.currencyCode,
-    }).format(priceToDisplay);  // Changed from Number to number
-
-
+    const formattedPrice = getFormattedPrice(product, locale)
   return (
     <button
       key={String(product.id)}
       className={styles.card}
-      onClick={() => addToCart(product.name[locale])}
-      aria-label={`Add ${product.name[locale]}to basket`}
+      onClick={() => addToCart(product)}
+      aria-label={`Add ${product.name[locale]} to basket`}
     >
       <h2>{product.name[locale]} <span>-&gt;</span></h2>
       <p>{formattedPrice}</p>

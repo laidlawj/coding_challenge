@@ -36,8 +36,12 @@ THINGS TO NOTE:
     - assuming they arent  - so created new ids, but there should be a check to make sure user doesn't see duplicate content 
 
 - cart displaying is distracting for a user, should just be a checkout icon 
-
+- chose to do integration testing rather than unit testing due to time constraints, to try to replicate the user experience, however in real life we would opt for both 
 
 TODO: 
-- fix checkout page
 - fix look for iphone (the cart dissapears) 
+- tests 
+- last two tasks
+- PUSH 
+- check for empty product, and make grey 
+- test for empty procuct 
