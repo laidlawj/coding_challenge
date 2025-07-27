@@ -45,3 +45,6 @@ TODO:
 - PUSH 
 - check for empty product, and make grey 
 - test for empty procuct 
+
+
+checking that push works
