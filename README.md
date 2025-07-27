@@ -47,4 +47,4 @@ TODO:
 - test for empty procuct 
 
 
-checking that push works
+checking if its working properly
