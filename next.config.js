@@ -1,25 +1,20 @@
 // next.config.js
+const { BASE_URL, MORE_PRODUCTS_API, PRODUCTS_API } = require("./consts.js");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-
   async rewrites() {
     return [
-      // Rewrite for the non-locale-prefixed API calls made by server components.
-      // The screenshot confirms requests like '/api/external/more-products' are being made.
       {
-        source: '/api/external/more-products',
-        destination: 'https://v0-api-endpoint-request.vercel.app/api/more-products',
+        source: MORE_PRODUCTS_API,
+        destination: `${BASE_URL}${MORE_PRODUCTS_API}`,
       },
       {
-        source: '/api/external/products',
-        destination: 'https://v0-api-endpoint-request.vercel.app/api/products',
+        source: PRODUCTS_API,
+        destination: `${BASE_URL}${PRODUCTS_API}`,
       },
     ];
   },
-
- 
-
 };
 
 module.exports = nextConfig;

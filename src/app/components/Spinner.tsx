@@ -1,5 +1,5 @@
-import React from 'react';
-import { TailSpin } from 'react-loader-spinner';
+import React from "react";
+import { TailSpin } from "react-loader-spinner";
 
 export default function SpinnerLoading(): JSX.Element {
   return (
@@ -12,8 +12,7 @@ export default function SpinnerLoading(): JSX.Element {
         wrapperStyle={{}}
         wrapperClass=""
         ariaLabel="puff-loading"
-
-      /> 
+      />
     </div>
   );
 }

@@ -1,20 +1,19 @@
-'use client';
-import React, { createContext, useContext, useState } from 'react';
-import { Product } from '../components/ProductList';
+"use client";
+import React, { createContext, useContext, useState } from "react";
+import { Product } from "../components/ProductList";
 
 // CartItemsMap: Key is productId (number), Value is quantity (number)
 export interface ProductInfo extends Product {
   quantity: number;
 }
 
-export type CartItemsMap = Map<number, ProductInfo>
+export type CartItemsMap = Map<number, ProductInfo>;
 
 type CartContextType = {
   items: CartItemsMap;
   itemCount: number;
   addToCart: (product: Product) => void;
 };
-
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
@@ -23,25 +22,19 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [itemCount, setItemCount] = useState<number>(0);
 
   const addToCart = (product: Product) => {
-    console.log("got here at least")
     const updatedItems = new Map(items);
-    const productId = product.id
+    const productId = product.id;
     const currentQuantity = updatedItems.get(productId)?.quantity || 0;
 
-    
     if (currentQuantity == 0) {
-      const productInfo =  {...product, // Spreads all properties from productObject
-  quantity: 1}
-      // Item exists: increment quantity
+      const productInfo = { ...product, quantity: 1 };
       updatedItems.set(productId, productInfo);
     } else {
-      // Item does not exist: add with quantity 1
-      const productInfo =  {...product, // Spreads all properties from productObject
-  quantity: currentQuantity + 1}
+      const productInfo = { ...product, quantity: currentQuantity + 1 };
       updatedItems.set(productId, productInfo);
     }
-    setItems(updatedItems)
-    setItemCount(prev => prev + 1);
+    setItems(updatedItems);
+    setItemCount((prev) => prev + 1);
   };
 
   return (
@@ -53,6 +46,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
 export const useCart = () => {
   const context = useContext(CartContext);
-  if (!context) throw new Error('useCart must be used inside CartProvider');
+  if (!context) throw new Error("useCart must be used inside CartProvider");
   return context;
 };
