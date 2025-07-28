@@ -29,14 +29,42 @@ Run the testing and linting with `npm run test` and `npm run lint`.
 
 
 
+## JADE THINGS TO NOTE
 
-## JADE THINGS TO NOTE:
-Product ID Duplication: I've identified an issue with non-unique product IDs originating from the two API endpoints. This leads to duplicate component IDs in the rendered output. For a production environment, this must be addressed by either ensuring distinct IDs from the backend, implementing frontend logic to prevent displaying duplicates, or adding a unique prefix (e.g., for recommended items) to differentiate them.
+### 1. Product ID Duplication
+I've identified an issue with non-unique product IDs originating from the two API endpoints. This leads to duplicate component IDs in the rendered output.
 
-Cart Display User Experience: The original persistent display of cart contents is distracting and deviates from standard e-commerce practices. I have commented out the ui, and preserved this functionality, the preferred approach is to display only a cart button, which can be easily reverted if needed.
+For a production environment, this must be addressed by either:
+- Ensuring distinct IDs from the backend,
+- Implementing frontend logic to prevent displaying duplicates, or
+- Adding a unique prefix (e.g., for recommended items) to differentiate them.
 
-Testing Strategy: Due to time constraints, I opted for integration testing to simulate the end-user experience. In a full production cycle, a comprehensive testing strategy would ideally incorporate both unit and integration tests.
+### 2. Cart Display User Experience
+The original persistent display of cart contents was visually distracting and deviated from standard e-commerce UX patterns.  
+I have commented out the UI but preserved the functionality. The current approach favors a cart button for toggling visibility. This can be easily reverted if needed.
 
-Next Steps & Immediate Focus:
+### 3. Testing Strategy
+Due to time constraints, I opted for integration testing to simulate the end-user experience.
 
-Inventory Management Policy: Define and implement a clear policy for handling product and stock levels. This includes preventing purchases of out-of-stock items and considering mechanisms for temporarily securing items in a user's cart (e.g., a 30-minute reservation).
+For a complete production setup, the testing strategy should include:
+- Unit tests (for logic-heavy components and utils),
+- Integration tests (user flows and UI composition),
+- End-to-end tests (as needed).
+
+
+### 5. Productionising Notes
+#### 4. Inventory Management Policy (Immediate Focus)
+We need to define and enforce a clear inventory policy:
+- Prevent purchases of out-of-stock items,
+- Optionally implement temporary reservations (e.g., hold item in cart for 30 mins),
+- Ensure backend enforces all stock constraints to avoid race conditions and overselling.
+
+#### Metrics & Observability
+- Instrument key flows: product fetch, add-to-cart, checkout.
+- Monitor response times, errors, and stock-related failures.
+- These metrics should support live dashboards and **real-time alerts**, allowing us to detect issues **before users report them**.
+
+#### Canary Releases
+- Implement canary deploys to reduce risk from new features.
+- Monitor error rates, latency, and engagement in canary cohorts.
+- Support automated rollback based on threshold violations.
