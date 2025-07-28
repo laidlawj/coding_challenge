@@ -30,7 +30,7 @@ Run the testing and linting with `npm run test` and `npm run lint`.
 
 
 
-THINGS TO NOTE:
+## JADE THINGS TO NOTE:
 Product ID Duplication: I've identified an issue with non-unique product IDs originating from the two API endpoints. This leads to duplicate component IDs in the rendered output. For a production environment, this must be addressed by either ensuring distinct IDs from the backend, implementing frontend logic to prevent displaying duplicates, or adding a unique prefix (e.g., for recommended items) to differentiate them.
 
 Cart Display User Experience: The original persistent display of cart contents is distracting and deviates from standard e-commerce practices. I have commented out the ui, and preserved this functionality, the preferred approach is to display only a cart button, which can be easily reverted if needed.
