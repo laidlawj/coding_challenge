@@ -48,7 +48,7 @@ export default function Cart() {
       {Array.from(items.values())
         .filter((product) => product.quantity > 0)
         .map((product) => (
-          <CheckoutLine product={product} />
+          <CheckoutLine key={product.id} product={product} />
         ))}
       <p>Total items: {itemCount}</p>
       <button className={styles.card}>
